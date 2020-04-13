@@ -26,15 +26,15 @@
         <activity android:name=".Activities.UserProfile" />
         <activity android:name=".Activities.AllCategories" />
         <activity android:name=".Common.SplashActivity">
-
-
-        </activity>
-        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+        </activity>
+        <activity android:name=".Activities.LoginActivity">
+
 
         </activity>
         <activity android:name=".Activities.RegisterActivity">
