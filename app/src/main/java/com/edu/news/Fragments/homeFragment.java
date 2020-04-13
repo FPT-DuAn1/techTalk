@@ -4,22 +4,28 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.edu.news.Adapter.PostAdapter;
+import com.edu.news.Models.Post;
 import com.edu.news.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link homeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link homeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class homeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,18 +38,16 @@ public class homeFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
+    RecyclerView postRecyclerView ;
+    PostAdapter postAdapter ;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference ;
+    List<Post> postList;
+
     public homeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment homeFragment.
-     */
     // TODO: Rename and change types and number of parameters
     public static homeFragment newInstance(String param1, String param2) {
         homeFragment fragment = new homeFragment();
@@ -67,7 +71,46 @@ public class homeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home2, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_home2, container, false);
+        postRecyclerView  = fragmentView.findViewById(R.id.postRV);
+        postRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        postRecyclerView.setHasFixedSize(true);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Posts");
+        return fragmentView;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Get List Posts tu database
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                postList = new ArrayList<>();
+                for (DataSnapshot postsnap: dataSnapshot.getChildren()) {
+
+                    Post post = postsnap.getValue(Post.class);
+                    postList.add(post) ;
+
+                }
+
+                postAdapter = new PostAdapter(getActivity(),postList);
+                postRecyclerView.setAdapter(postAdapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -80,12 +123,7 @@ public class homeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override
@@ -94,16 +132,6 @@ public class homeFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

@@ -28,4 +28,5 @@ public class AllCategories extends AppCompatActivity {
         });
 
     }
+
 }

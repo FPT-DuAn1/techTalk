@@ -21,7 +21,7 @@
 
 
         </activity>
-        <activity android:name=".Activities.detailActivity" />
+        <activity android:name=".Activities.PostDetailActivity" />
         <activity android:name=".Common.OnBoardingActivity" />
         <activity android:name=".Activities.UserProfile" />
         <activity android:name=".Activities.AllCategories" />
@@ -38,12 +38,6 @@
 
         </activity>
         <activity android:name=".Activities.RegisterActivity">
-
-
-        </activity>
-        <activity
-            android:name=".Activities.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
 
 
         </activity>

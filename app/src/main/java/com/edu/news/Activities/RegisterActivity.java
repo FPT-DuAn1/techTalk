@@ -175,7 +175,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                                             // info user update thanh cong
                                             showMessage("Đăng ký thành công");
-                                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                                             updateUI();
                                         }
 

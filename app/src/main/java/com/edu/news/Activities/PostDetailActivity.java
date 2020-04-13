@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import com.edu.news.R;
 
-public class detailActivity extends AppCompatActivity {
+public class PostDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class detailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.option_menu,menu);
+        inflater.inflate(R.menu.home,menu);
         return super.onCreateOptionsMenu(menu);
     }
     //menu options click (if = switch item)
