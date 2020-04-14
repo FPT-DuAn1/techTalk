@@ -1,16 +1,16 @@
-package com.edu.news.Helper;
+package com.edu.news.Models;
 
-public class UserHelperClass {
+public class User {
     public  String username;
     public  String name;
     public  String email;
     public  String password;
 
-    public UserHelperClass() {
+    public User() {
 
     }
 
-    public UserHelperClass(String username,String password, String email, String name) {
+    public User(String username, String password, String email, String name) {
         this.username = username;
         this.name = name;
         this.email = email;

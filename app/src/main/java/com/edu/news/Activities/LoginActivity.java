@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
             showMessage("Chào mừng bạn đã trở lại");
 
         }
+//        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 
     }
 }
