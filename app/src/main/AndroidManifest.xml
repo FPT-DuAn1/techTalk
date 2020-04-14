@@ -33,11 +33,13 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
 
         </activity>
-        <activity android:name=".Activities.RegisterActivity">
+        <activity android:name=".Activities.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
 
         </activity>
