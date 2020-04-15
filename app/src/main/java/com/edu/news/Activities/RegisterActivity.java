@@ -76,12 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
                 final String username = regUsername.getText().toString();
                 final String email = regEmail.getText().toString();
                 final String password = regPassword.getText().toString();
+                final String userphoto = ImgUserPhoto.toString();
 
 
                 // bat dieu kien
-                if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || userphoto!=null) {
                     //Khong nhap du lieu vao cac o se bat loi va thong bao len man hinh
-                    showMessage("Trống");
+                    showMessage("Nhập đủ thông tin và avatar");
                     btnDangKy.setVisibility(View.VISIBLE);
                     loadingProgressBar.setVisibility(View.INVISIBLE);
                 } else {
@@ -216,10 +217,13 @@ public class RegisterActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(RegisterActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                Toast.makeText(RegisterActivity.this, "Cho phép quyền truy cập", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Dề nghị cho phép quyền truy cập ảnh", Toast.LENGTH_SHORT).show();
+
 
             } else {
                 ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PReqCode);
+                Toast.makeText(RegisterActivity.this, "Chọn ảnh", Toast.LENGTH_SHORT).show();
+
             }
         } else
             openGallery();

@@ -8,40 +8,94 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.edu.news.Activities.HomeActivity;
 import com.edu.news.Activities.LoginActivity;
 import com.edu.news.Activities.RegisterActivity;
 import com.edu.news.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class SplashActivity extends AppCompatActivity {
-    View mContentView;
-    Handler handler;
+    private static int SLPASH_TIME_OUT = 3000;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
 
-//        set hide title and action bar
-        Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getSupportActionBar().hide();
-//
-//        mContentView = findViewById(R.id.imageViewLogo);
-//        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                |View.SYSTEM_UI_FLAG_FULLSCREEN
-//                |View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-//                |View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-//                |View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                |View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        mAuth = FirebaseAuth.getInstance();
 
-        handler = new Handler();
-        handler.postDelayed(new Runnable() {
+//        getSupportActionBar().hide();
+
+
+//        delay splash
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if (currentUser == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            showMessage("Mời đăng nhập hoặc đăng ký");
 
+        }else {
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            showMessage("Chào mừng quay lại");
+
+        }
+                finish();
             }
-        }, 4000);
+        }, SLPASH_TIME_OUT);
     }
+
+    private void showMessage(String text) {
+        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//
+//        if (currentUser == null) {
+//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//            showMessage("Mời đăng nhập hoặc đăng ký");
+//
+//        }else {
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            showMessage("Chào mừng quay lại");
+//
+//        }
+//    }
+
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+//        if (mHandler != null && mRunnable != null)
+//        mHandler.removeCallbacks(mRunnable);
+//    }
+
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//
+//        if (currentUser == null) {
+//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//            showMessage("Mời đăng nhập hoặc đăng ký");
+//
+//        }else {
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//
+//        }
+//    }
 }
+
+
+
+

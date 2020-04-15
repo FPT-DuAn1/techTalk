@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -52,6 +53,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -75,9 +77,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
-
-
         //Views
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -89,11 +88,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         iniPopup();
         setupPopupImageClick();
 
+        //set title
+        getSupportActionBar().setTitle("Tech Talk");
+        getSupportActionBar().setSubtitle("News Feeds");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 popAddPost.show();
+                showToast();
             }
         });
 
@@ -104,17 +107,26 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
         NavigationView navigationView = findViewById(R.id.nav_view);
-
         navigationView.setNavigationItemSelectedListener(this);
 
         updateNavHeader();
 
         //set homeFragment hien thi len  home activity
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,new homeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, new homeFragment()).commit();
 
 
+    }
+
+    private void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout, (ViewGroup) findViewById(R.id.toast_root));
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER, 0, -400);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void setupPopupImageClick() {
@@ -181,7 +193,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                 public void onSuccess(Uri uri) {
                                     String imageDownloadLink = uri.toString();
 
-                                   //  khoi tao Object Post
+                                    //  khoi tao Object Post
 
                                     Post post = new Post(popupTitle.getText().toString(),
                                             popupDescription.getText().toString(),
@@ -209,7 +221,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
                         }
                     });
-
 
 
                 } else {
@@ -361,8 +372,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_logout) {
             FirebaseAuth.getInstance().signOut();
-            Intent homeActivity = new Intent(getApplicationContext(), homeFragment.class);
-            startActivity(homeActivity);
+            Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(loginActivity);
             finish();
 
         } else if (id == R.id.nav_trend) {
@@ -382,7 +393,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
-
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if (currentUser == null) {
+//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+//
+//        }else {
+//            showMessage("Chào mừng quay trở lại");
+//        }
+//
+//    }
 }

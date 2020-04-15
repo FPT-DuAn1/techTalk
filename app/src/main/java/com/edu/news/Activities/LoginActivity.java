@@ -106,17 +106,17 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//
+//        if (currentUser != null) {
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            showMessage("Chào mừng quay trở lại");
+//            finish();
+//        }
+//    }
 
-        if (user != null){
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            showMessage("Chào mừng bạn đã trở lại");
 
-        }
-//        startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-
-    }
 }
