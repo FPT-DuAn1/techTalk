@@ -37,7 +37,6 @@
             <!--            android:label="@string/title_activity_home"-->
         </activity>
         <activity android:name=".Activities.PostDetailActivity" />
-        <activity android:name=".Common.OnBoardingActivity" />
         <activity android:name=".Activities.UserProfile" />
         <activity android:name=".Activities.AllCategories" />
         <meta-data

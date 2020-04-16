@@ -10,8 +10,10 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,15 +24,21 @@ import android.widget.Toast;
 
 import com.edu.news.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -39,9 +47,10 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnDangKy;
     private ProgressBar loadingProgressBar;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mStore;
     TextView tvDangNhap;
-
     ImageView ImgUserPhoto;
+    String userID;
 
     static int PReqCode = 1;
     static int REQUESCODE = 1;
@@ -65,33 +74,30 @@ public class RegisterActivity extends AppCompatActivity {
         loadingProgressBar.setVisibility(View.INVISIBLE);
 
         mAuth = FirebaseAuth.getInstance();
+        mStore = FirebaseFirestore.getInstance();
 
-        //Bat su kien Onlclick btnDangKy
         btnDangKy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnDangKy.setVisibility(View.INVISIBLE);
-                loadingProgressBar.setVisibility(View.VISIBLE);
-                final String name = regName.getText().toString();
-                final String username = regUsername.getText().toString();
-                final String email = regEmail.getText().toString();
-                final String password = regPassword.getText().toString();
-                final String userphoto = ImgUserPhoto.toString();
+                                         @Override
+                                         public void onClick(View v) {
+                                             btnDangKy.setVisibility(View.INVISIBLE);
+                                             loadingProgressBar.setVisibility(View.VISIBLE);
+                                             final String name = regName.getText().toString();
+                                             final String username = regUsername.getText().toString();
+                                             final String email = regEmail.getText().toString();
+                                             final String password = regPassword.getText().toString();
 
 
-                // bat dieu kien
-                if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || userphoto!=null) {
-                    //Khong nhap du lieu vao cac o se bat loi va thong bao len man hinh
-                    showMessage("Nhập đủ thông tin và avatar");
-                    btnDangKy.setVisibility(View.VISIBLE);
-                    loadingProgressBar.setVisibility(View.INVISIBLE);
-                } else {
-                    // nguoc lai khong trong se tao tai khoan
-                    //phuong thuc Create se tao tai khoan neu email valid
-                    CreateUserAccount(username, name, email, password);
-                }
-            }
-        });
+                                             if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() ) {
+
+                                                 showMessage("Nhập đủ thông tin và avatar");
+                                                 btnDangKy.setVisibility(View.VISIBLE);
+                                                 loadingProgressBar.setVisibility(View.INVISIBLE);
+                                             } else {
+                                                 CreateUserAccount(username, name, email, password);
+                                             }
+                                         }
+                                     }
+        );
 
 
         tvDangNhap.setOnClickListener(new View.OnClickListener() {
@@ -115,16 +121,34 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void CreateUserAccount(String username, final String name, String email, String password) {
-        // tao tai khoan rieng voi email va password
-
+    private void CreateUserAccount(final String username, final String name, final String email, final String password) {
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // tao tai khoan thanh oong
                     showMessage("Tạo tài khoản thành công");
-                    //tao thanh cong xong update avatar va name
+
+                    userID = mAuth.getCurrentUser().getUid();
+                    DocumentReference documentReference = mStore.collection("users").document(userID);
+                    Map<String,Object> user = new HashMap<>();    
+                    user.put("fullname",name);
+                    user.put("email",email);
+                    user.put("username",username);
+                    user.put("password",password);
+
+
+                    documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+//                         showMessage("Tạo profile thành công user:" + userID);
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            showMessage("Lỗi:" + e.toString());
+                        }
+                    });
+
                     updateUserInfo(name, pickedImgUri, mAuth.getCurrentUser());
 
 
@@ -138,10 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    // update avatar va name
     private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
-
-        // first: up len firebase storage va get url
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
         imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -172,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
                                             // info user update thanh cong
                                             showMessage("Đăng ký thành công");
                                             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                                            updateUI();
+
                                         }
 
                                     }
@@ -184,12 +205,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void updateUI() {
 
-    }
-
-
-    // Phuong thuc de show Toast len activity
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
     }
@@ -228,8 +244,6 @@ public class RegisterActivity extends AppCompatActivity {
         } else
             openGallery();
     }
-
-
 
 
 }

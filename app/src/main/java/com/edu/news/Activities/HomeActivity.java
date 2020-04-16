@@ -89,8 +89,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setupPopupImageClick();
 
         //set title
-        getSupportActionBar().setTitle("Tech Talk");
-        getSupportActionBar().setSubtitle("News Feeds");
+        getSupportActionBar().setTitle("News Feeds");
+        getSupportActionBar().setSubtitle("Tech Talk");
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
