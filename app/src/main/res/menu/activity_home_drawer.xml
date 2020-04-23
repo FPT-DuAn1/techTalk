@@ -26,6 +26,11 @@
             android:id="@+id/nav_save"
             android:title="Đã lưu"
             android:icon="@drawable/icon_menu_save"/>
+
+        <item
+            android:id="@+id/nav_read_news"
+            android:title="Đọc báo"
+            android:icon="@mipmap/ic_book"/>
     </group>
     <item
         android:title="Profile">
@@ -45,6 +50,7 @@
                     android:id="@+id/nav_logout"
                     android:title="Đăng xuất"
                     android:icon="@drawable/icon_menu_logout" />
+
 
             </group>
         </menu>
