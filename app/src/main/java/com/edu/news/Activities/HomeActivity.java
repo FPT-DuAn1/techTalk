@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 
+import com.edu.news.Fragments.Read_newsFragment;
 import com.edu.news.Fragments.aboutFragment;
 import com.edu.news.Fragments.categoryFragment;
 import com.edu.news.Fragments.homeFragment;
@@ -359,7 +360,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setTitle("Đã lưu");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new saveFragment()).commit();
 
-        } else if (id == R.id.nav_profile) {
+        }else if(id == R.id.nav_read_news){
+            getSupportActionBar().setTitle("Đọc báo");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new Read_newsFragment()).commit();
+
+//            Intent in = new Intent(getApplicationContext(),WebView.class);
+//            startActivity(in);
+
+
+        }
+        else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Thông tin cá nhân");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new profileFragment()).commit();
 
