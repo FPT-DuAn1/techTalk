@@ -363,6 +363,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         }else if(id == R.id.nav_read_news){
             getSupportActionBar().setTitle("Đọc báo");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new Read_newsFragment()).commit();
+
+//            Intent in = new Intent(getApplicationContext(),WebView.class);
+//            startActivity(in);
+
+
         }
         else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Thông tin cá nhân");
