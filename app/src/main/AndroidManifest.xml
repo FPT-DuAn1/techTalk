@@ -36,6 +36,12 @@
 
             <!--            android:label="@string/title_activity_home"-->
         </activity>
+<!--        <activity-->
+<!--            android:name=".Activities.SearchActivity"-->
+<!--            android:theme="@style/AppTheme.NoActionBar">-->
+<!--        </activity>-->
+
+        <activity android:name=".Activities.WebView"/>
         <activity android:name=".Activities.PostDetailActivity" />
         <activity android:name=".Activities.UserProfile"
             android:theme="@style/AppTheme.NoActionBar"/>
