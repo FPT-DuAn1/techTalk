@@ -162,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
+    private void updateUserInfo(final String name, Uri pickedImgUri ,final FirebaseUser currentUser) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
         imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

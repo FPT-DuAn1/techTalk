@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,12 +8,9 @@
     tools:context=".Activities.PostDetailActivity"
     android:background="#fff">
 
-
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
         <ImageView
             android:id="@+id/post_detail_img"
@@ -28,7 +24,6 @@
             app:srcCompat="@drawable/ic_launcher_background" />
 
         <TextView
-
             android:id="@+id/post_detail_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,7 +55,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_detail_title" />
-
         <TextView
             android:textSize="12sp"
             android:id="@+id/post_detail_date_name"
@@ -77,9 +71,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view"
             tools:text="18 jan 2018 | by Arun Larrson " />
-
         <TextView
-
             android:textColor="#373737"
             android:lineSpacingExtra="8dp"
             android:id="@+id/post_detail_desc"
@@ -90,7 +82,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit,rum eiusmod tempor incididunt ut labore et dolore magna aliqua"
+            android:text="Description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/post_detail_date_name" />

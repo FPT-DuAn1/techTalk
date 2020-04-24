@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 // bat dieu kien
                 if (email.isEmpty() || password.isEmpty()) {
-                    //Khong nhap du lieu vao cac o se bat loi va thong bao len man hinh
+
                     showMessage("Trống");
                     btnDangNhap.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
@@ -105,18 +105,4 @@ public class LoginActivity extends AppCompatActivity {
     private void showMessage(String text) {
         Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//
-//        if (currentUser != null) {
-//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-//            showMessage("Chào mừng quay trở lại");
-//            finish();
-//        }
-//    }
-
-
 }

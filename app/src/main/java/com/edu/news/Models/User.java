@@ -1,10 +1,10 @@
 package com.edu.news.Models;
 
 public class User {
-    public  String username;
-    public  String name;
-    public  String email;
-    public  String password;
+    public String username;
+    public String name;
+    public String email;
+    public String password;
 
     public User() {
 
@@ -14,7 +14,6 @@ public class User {
         this.username = username;
         this.name = name;
         this.email = email;
-
         this.password = password;
     }
 
@@ -30,13 +29,9 @@ public class User {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
     public void setEmail(String email) {
         this.email = email;

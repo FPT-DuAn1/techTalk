@@ -2,11 +2,13 @@ package com.edu.news.Activities;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
@@ -32,7 +34,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -361,8 +365,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Thông tin cá nhân");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new profileFragment()).commit();
-
+//            getSupportFragmentManager().beginTransaction().replace(R.id.container, new profileFragment()).commit();
+            Intent infoActivity = new Intent(getApplicationContext(), UserProfile.class);
+            startActivity(infoActivity);
         } else if (id == R.id.nav_login) {
 
             FirebaseAuth.getInstance().signOut();
@@ -371,10 +376,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             finish();
 
         } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
-            Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
-            startActivity(loginActivity);
-            finish();
+            DialogExit();
 
         } else if (id == R.id.nav_trend) {
             getSupportActionBar().setTitle("Thống kê");
@@ -388,20 +390,31 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new aboutFragment()).commit();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if (currentUser == null) {
-//            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-//
-//        }else {
-//            showMessage("Chào mừng quay trở lại");
-//        }
-//
-//    }
+    private void DialogExit() {
+        //View dialog exit for even click on item exit of navigationDrawer
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        LayoutInflater inf = HomeActivity.this.getLayoutInflater();
+        View view = inf.inflate(R.layout.dialog_exit, null);
+        alertDialog.setView(view);
+        alertDialog.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        });
+        alertDialog.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alertDialog.show();
+        //View dialog exit for even click on item exit of navigationDrawer
+    }
+
 }
