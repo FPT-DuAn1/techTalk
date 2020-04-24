@@ -48,7 +48,7 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
 
         image_profile = findViewById(R.id.profile_image);
-        save = findViewById(R.id.save_btn);
+        save = findViewById(R.id.update_btn);
 //        delete = findViewById(R.id.delete_btn);
 //        tv_change = findViewById(R.id.tv_change);
         fullname = findViewById(R.id.fullnameProfile);

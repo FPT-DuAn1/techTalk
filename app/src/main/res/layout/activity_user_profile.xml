@@ -110,7 +110,7 @@
 
             <Button
                 android:background="@drawable/reg_btn_style"
-                android:id="@+id/save_btn"
+                android:id="@+id/update_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Cập nhật"
