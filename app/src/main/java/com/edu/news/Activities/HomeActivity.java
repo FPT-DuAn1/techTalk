@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
 
+import com.edu.news.Fragments.Read_newsFragment;
 import com.edu.news.Fragments.aboutFragment;
 import com.edu.news.Fragments.categoryFragment;
 import com.edu.news.Fragments.homeFragment;
@@ -18,13 +19,11 @@ import com.edu.news.Fragments.profileFragment;
 import com.edu.news.Fragments.saveFragment;
 import com.edu.news.Fragments.searchFragment;
 import com.edu.news.Fragments.sendFragment;
-import com.edu.news.Fragments.trendFragment;
 import com.edu.news.Models.Post;
 import com.edu.news.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -248,7 +247,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String key = myRef.getKey();
         post.setPostKey(key);
 
-        // add post data vao firebase database
+            // add post data vao firebase database
 
         myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -376,9 +375,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             startActivity(loginActivity);
             finish();
 
-        } else if (id == R.id.nav_trend) {
-            getSupportActionBar().setTitle("Thống kê");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new trendFragment()).commit();
+        } else if (id == R.id.nav_news) {
+            getSupportActionBar().setTitle("Tin tức hằng ngày");
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, new Read_newsFragment()).commit();
 
         } else if (id == R.id.nav_send) {
             getSupportActionBar().setTitle("Góp ý");
