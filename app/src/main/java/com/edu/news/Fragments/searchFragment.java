@@ -76,7 +76,14 @@ public class searchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         searchPostRV  = view.findViewById(R.id.searchPostRV);
         searchView = view.findViewById(R.id.svSearch);
-        searchPostRV.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //Show post từ mới nhất tới cũ nhất
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+
+        // Show post lên
+        searchPostRV.setLayoutManager(layoutManager);
         searchPostRV.setHasFixedSize(true);
         firebaseDatabase = FirebaseDatabase.getInstance();
         ref = firebaseDatabase.getReference("Posts"); // Lấy dữ liệu post từ DB

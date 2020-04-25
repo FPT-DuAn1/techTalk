@@ -73,7 +73,14 @@ public class homeFragment extends Fragment {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_home2, container, false);
         postRecyclerView  = fragmentView.findViewById(R.id.postRV);
-        postRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //Show post từ mới nhất tới cũ nhất
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+
+        // Show post lên
+        postRecyclerView.setLayoutManager(layoutManager);
         postRecyclerView.setHasFixedSize(true);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("Posts");
