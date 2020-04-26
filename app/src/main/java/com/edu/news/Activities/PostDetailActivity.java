@@ -41,8 +41,8 @@ import java.util.Locale;
 
 public class PostDetailActivity extends AppCompatActivity {
 
-    ImageView imgPost,imgUserPost,imgCurrentUser;
-    TextView txtPostDesc,txtPostDateName,txtPostTitle;
+    ImageView imgPost, imgUserPost, imgCurrentUser;
+    TextView txtPostDesc, txtPostDateName, txtPostTitle;
     EditText editTextComment;
     Button btnAddComment;
     String PostKey;
@@ -53,8 +53,7 @@ public class PostDetailActivity extends AppCompatActivity {
     CommentAdapter commentAdapter;
     List<Comment> listComment;
 
-    static String COMMENT_KEY = "Comment" ;
-
+    static String COMMENT_KEY = "Comment";
 
 
     @Override
@@ -64,13 +63,13 @@ public class PostDetailActivity extends AppCompatActivity {
 
         //set hide title and action bar
         Window w = getWindow();
-        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         getSupportActionBar().hide();
 
 
         //Views
         RvComment = findViewById(R.id.rv_comment);
-        imgPost =findViewById(R.id.post_detail_img);
+        imgPost = findViewById(R.id.post_detail_img);
         imgUserPost = findViewById(R.id.post_detail_user_img);
         imgCurrentUser = findViewById(R.id.post_detail_currentuser_img);
 
@@ -97,7 +96,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 String uid = firebaseUser.getUid();
                 String uname = firebaseUser.getDisplayName();
                 String uimg = firebaseUser.getPhotoUrl().toString();
-                Comment comment = new Comment(comment_content,uid,uimg,uname);
+                Comment comment = new Comment(comment_content, uid, uimg, uname);
 
                 //new Comment(comment_content , uid , uimg , uname);
 
@@ -111,21 +110,19 @@ public class PostDetailActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        showMessage("Lỗi : "+e.getMessage());
+                        showMessage("Lỗi : " + e.getMessage());
                     }
                 });
-
 
 
             }
         });
 
-        //dau tien phai lien ket du lieu vao cac views
-        //dau tien phai get du dieu trong post
+
         // gui du lieu post data chi tiet qua activity truoc
         //tiep theo lay du lieu post
 
-        String postImage = getIntent().getExtras().getString("postImage") ;
+        String postImage = getIntent().getExtras().getString("postImage");
         Glide.with(this).load(postImage).into(imgPost);
 
         String postTitle = getIntent().getExtras().getString("title");
@@ -151,14 +148,14 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
     private void showMessage(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_LONG).show();
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
 
     private String timestampToString(long time) {
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
-        String date = DateFormat.format("dd-MM-yyyy",calendar).toString();
+        String date = DateFormat.format("dd-MM-yyyy", calendar).toString();
         return date;
 
 
@@ -173,13 +170,13 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listComment = new ArrayList<>();
-                for (DataSnapshot snap:dataSnapshot.getChildren()) {
+                for (DataSnapshot snap : dataSnapshot.getChildren()) {
 
                     Comment comment = snap.getValue(Comment.class);
-                    listComment.add(comment) ;
+                    listComment.add(comment);
                 }
 
-                commentAdapter = new CommentAdapter(getApplicationContext(),listComment);
+                commentAdapter = new CommentAdapter(getApplicationContext(), listComment);
                 RvComment.setAdapter(commentAdapter);
             }
 
@@ -195,14 +192,15 @@ public class PostDetailActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home,menu);
+        inflater.inflate(R.menu.home, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     //menu options click (if = switch item)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.edit){
-            Toast.makeText(this,"Test", Toast.LENGTH_SHORT).show();
+        if (item.getItemId() == R.id.edit) {
+            Toast.makeText(this, "Test", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

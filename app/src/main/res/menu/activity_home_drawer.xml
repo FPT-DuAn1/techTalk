@@ -12,10 +12,10 @@
             android:id="@+id/nav_search"
             android:title="Tìm kiếm"
             android:icon="@drawable/icon_menu_search"/>
-        <item
-            android:id="@+id/nav_category"
-            android:title="Danh mục"
-            android:icon="@drawable/icon_menu_category"/>
+<!--        <item-->
+<!--            android:id="@+id/nav_category"-->
+<!--            android:title="Danh mục"-->
+<!--            android:icon="@drawable/icon_menu_category"/>-->
         <item
             android:id="@+id/nav_save"
             android:title="Đã lưu"

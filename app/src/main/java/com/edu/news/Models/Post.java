@@ -13,7 +13,7 @@ public class Post {
     private String userName;
     private Object timeStamp;
 
-    public Post(String title, String description, String picture, String userId, String userPhoto) {
+    public Post(String title, String description, String picture, String userId, String userPhoto, String userName) {
         this.postKey = postKey;
         this.title = title;
         this.description = description;

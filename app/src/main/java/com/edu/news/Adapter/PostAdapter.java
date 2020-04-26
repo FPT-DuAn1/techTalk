@@ -50,6 +50,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
 
         mUser = FirebaseAuth.getInstance().getCurrentUser();
         holder.tvTitle.setText(mData.get(position).getTitle());
+        holder.userName.setText(mData.get(position).getUserName());
         Glide.with(mContext).load(mData.get(position).getPicture()).into(holder.imgPost);
         Glide.with(mContext).load(mData.get(position).getUserPhoto()).into(holder.imgPostProfile);
 
@@ -80,6 +81,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle;
+        TextView userName;
         ImageView imgPost;
         ImageView imgPostProfile;
         ImageView save;
@@ -91,6 +93,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
             imgPost = itemView.findViewById(R.id.row_post_img);
             imgPostProfile = itemView.findViewById(R.id.row_post_profile_img);
             save = itemView.findViewById(R.id.save_post_btn);
+            userName = itemView.findViewById(R.id.row_post_username);
 
 
 
@@ -105,8 +108,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.MyViewHolder> 
                     postDetailActivity.putExtra("description", mData.get(position).getDescription());
                     postDetailActivity.putExtra("postKey", mData.get(position).getPostKey());
                     postDetailActivity.putExtra("userPhoto", mData.get(position).getUserPhoto());
-//                    postDetailActivity.putExtra("userName",mData.get(position).getUsername());
-                    // will fix this later i forgot to add user name to post object
                     long timestamp = (long) mData.get(position).getTimeStamp();
                     postDetailActivity.putExtra("postDate", timestamp);
                     mContext.startActivity(postDetailActivity);

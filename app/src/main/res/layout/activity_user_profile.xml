@@ -73,14 +73,6 @@
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp" />
 
-            <TextView
-                android:id="@+id/tv_change"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Đổi ảnh đại diện"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="16sp" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/fullnameProfile"
@@ -115,11 +107,6 @@
                 android:layout_height="wrap_content"
                 android:text="Cập nhật"
                 android:textColor="#f7f7f7"/>
-<!--            <Button-->
-<!--                android:id="@+id/delete_btn"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Xóa tài khoản" />-->
 
 
         </LinearLayout>

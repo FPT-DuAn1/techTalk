@@ -12,12 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 
 import com.bumptech.glide.Glide;
-
 import com.edu.news.Fragments.Read_newsFragment;
 import com.edu.news.Fragments.aboutFragment;
 import com.edu.news.Fragments.categoryFragment;
 import com.edu.news.Fragments.homeFragment;
-import com.edu.news.Fragments.profileFragment;
 import com.edu.news.Fragments.saveFragment;
 import com.edu.news.Fragments.searchFragment;
 import com.edu.news.Fragments.sendFragment;
@@ -40,7 +38,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,11 +48,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.Menu;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -157,9 +152,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         popupUserImage = popAddPost.findViewById(R.id.popup_user_image);
         popupPostImage = popAddPost.findViewById(R.id.popup_img);
         popupTitle = popAddPost.findViewById(R.id.popup_title);
+//        popupUserName = popAddPost.findViewById(R.id.popup_progressBar)
         popupDescription = popAddPost.findViewById(R.id.popup_description);
         popupAddBtn = popAddPost.findViewById(R.id.popup_add);
         popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);
+
 
         // Glide load anh dai dien
 
@@ -182,7 +179,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         && pickedImgUri != null) {
 
                     // khong empty va null
-                    // TODO Tao Post Object and them no vao firebase database
+                    // Tao Post Object and them no vao firebase database
                     // first up image len firebase storage
                     // truy cap  firebase storage
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("blog_images");
@@ -202,7 +199,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                                             popupDescription.getText().toString(),
                                             imageDownloadLink,
                                             currentUser.getUid(),
-                                            currentUser.getPhotoUrl().toString());
+                                            currentUser.getPhotoUrl().toString(), currentUser.getDisplayName());
 
                                     // Add post to firebase database
 
@@ -251,7 +248,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         String key = myRef.getKey();
         post.setPostKey(key);
 
-            // add post data vao firebase database
+        // add post data vao firebase database
 
         myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -330,12 +327,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         Glide.with(this).load(currentUser.getPhotoUrl()).into(navUserPhoto);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.home, menu);
+//        return true;
+//    }
 
 
     @Override
@@ -353,22 +350,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             getSupportActionBar().setTitle("Tìm kiếm");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new searchFragment()).commit();
 
-        } else if (id == R.id.nav_category) {
 
-            getSupportActionBar().setTitle("Danh mục");
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, new categoryFragment()).commit();
-//
         } else if (id == R.id.nav_save) {
             getSupportActionBar().setTitle("Đã lưu");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, new saveFragment()).commit();
 
         } else if (id == R.id.nav_profile) {
             getSupportActionBar().setTitle("Thông tin cá nhân");
-//            getSupportFragmentManager().beginTransaction().replace(R.id.container, new profileFragment()).commit();
             Intent infoActivity = new Intent(getApplicationContext(), UserProfile.class);
             startActivity(infoActivity);
         } else if (id == R.id.nav_login) {
-
             FirebaseAuth.getInstance().signOut();
             Intent loginActivity = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(loginActivity);
@@ -413,7 +404,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             }
         });
         alertDialog.show();
-        //View dialog exit for even click on item exit of navigationDrawer
     }
 
 }

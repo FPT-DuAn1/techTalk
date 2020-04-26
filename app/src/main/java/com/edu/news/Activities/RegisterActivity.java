@@ -10,10 +10,8 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -87,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                                              final String password = regPassword.getText().toString();
 
 
-                                             if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() ) {
+                                             if (name.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
 
                                                  showMessage("Nhập đủ thông tin và avatar");
                                                  btnDangKy.setVisibility(View.VISIBLE);
@@ -130,11 +128,11 @@ public class RegisterActivity extends AppCompatActivity {
 
                     userID = mAuth.getCurrentUser().getUid();
                     DocumentReference documentReference = mStore.collection("users").document(userID);
-                    Map<String,Object> user = new HashMap<>();    
-                    user.put("fullname",name);
-                    user.put("email",email);
-                    user.put("username",username);
-                    user.put("password",password);
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("fullname", name);
+                    user.put("email", email);
+                    user.put("username", username);
+                    user.put("password", password);
 
 
                     documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -162,7 +160,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void updateUserInfo(final String name, Uri pickedImgUri ,final FirebaseUser currentUser) {
+    private void updateUserInfo(final String name, Uri pickedImgUri, final FirebaseUser currentUser) {
         StorageReference mStorage = FirebaseStorage.getInstance().getReference().child("users_photos");
         final StorageReference imageFilePath = mStorage.child(pickedImgUri.getLastPathSegment());
         imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -203,7 +201,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void showMessage(String message) {
